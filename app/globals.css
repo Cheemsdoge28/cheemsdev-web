@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 215 65% 35%; /* #205295 - was secondary, now primary */
+    --primary-foreground: 220 20% 98%; /* #f8f9fb - keep as light foreground */
+    --background: 240 20% 98%; /* #f8f9fb - near-white */
+    --foreground: 240 15% 10%; /* #23243a - very dark blue/gray for text */
+    --card: 0 0% 100%; /* #fff - cards are pure white for elevation */
+    --card-foreground: 240 15% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 15% 10%;
+    --secondary: 240 100% 13%; /* #000045 - was primary, now secondary */
+    --secondary-foreground: 220 20% 98%; /* #f8f9fb - was primary-foreground */
+    --muted: 220 40% 95%; /* #e8ecf7 - soft muted blue */
+    --muted-foreground: 240 15% 40%;
+    --accent: 45 100% 85%; /* #fff3c4 - pale gold accent */
+    --accent-foreground: 240 15% 10%;
+    --destructive: 0 84% 60%; /* #FF4D4F */
+    --destructive-foreground: 220 20% 98%;
+    --border: 220 30% 85%; /* #d3d9e9 - light blue border */
+    --input: 220 30% 85%;
+    --ring: 215 65% 35%; /* now matches new primary */
+    --chart-1: 215 65% 35%; /* now matches new primary */
+    --chart-2: 240 100% 13%; /* now matches new secondary */
+    --chart-3: 45 100% 85%; /* accent */
+    --chart-4: 340 75% 55%; /* magenta */
+    --chart-5: 160 100% 80%; /* teal */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Simple fade up animation */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 1.5s ease-out forwards;
+  }
+}
