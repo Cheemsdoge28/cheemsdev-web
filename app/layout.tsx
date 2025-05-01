@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react"
+import { SanityLive } from "@/sanity/lib/live"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -10,13 +13,13 @@ const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: {
-    template: "%s | Schema UI Starter",
-    default: "Sanity Next.js Website | Schema UI Starter",
+    template: "%s | RISEBIT Fintech",
+    default: "RISEBIT Fintech",
   },
   openGraph: {
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/og-image.jpg`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/og-image.jpg`, 
         width: 1200,
         height: 630,
       },
@@ -49,6 +52,9 @@ export default function RootLayout({
       >
         {children}
         <Toaster position="top-center" richColors />
+        <Analytics />
+        <SanityLive />
+        <SpeedInsights />
       </body>
     </html>
   );
