@@ -164,7 +164,7 @@ export default function FormContact({
               />
             </div>
           )}
-          <div className="flex w-full flex-col gap-6 px-4 py-16 md:px-16 lg:px-24 md:py-16 md:pb-16 lg:w-3/5 lg:pb-24 lg:pl-12 lg:pr-24 lg:pt-24">
+          <div className="flex w-full flex-col gap-y-4 px-4 py-16 md:px-16 lg:px-24 md:py-16 md:pb-16 lg:w-3/5 lg:pb-24 lg:pl-12 lg:pr-24 lg:pt-24">
           <div
             className={cn(color === "primary" ? "text-background" : undefined, "flex flex-col gap-4")}
           >
@@ -187,7 +187,7 @@ export default function FormContact({
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative mb-5">
                   <FormControl>
                     <Input
                       {...field}
@@ -198,7 +198,7 @@ export default function FormContact({
                       })}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="absolute left-0 top-full mt-1 text-xs text-destructive" />
                 </FormItem>
               )}
             />
@@ -206,18 +206,19 @@ export default function FormContact({
               control={form.control}
               name="phone"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative mb-5">
                   <FormControl>
                     <PhoneInput
                       placeholder="Enter your phone number"
                       {...field}
+                      defaultCountry="US"
                       className={cn({
                         "text-secondary-foreground": color === "secondary",
                         "text-background": color === "primary",
                       })}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="absolute left-0 top-full mt-1 text-xs text-destructive" />
                 </FormItem>
               )}
             />
@@ -225,7 +226,7 @@ export default function FormContact({
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative mb-5">
                   <FormControl>
                     <Input
                       {...field}
@@ -239,7 +240,7 @@ export default function FormContact({
                       })}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="absolute left-0 top-full mt-1 text-xs text-destructive" />
                 </FormItem>
               )}
             />
@@ -247,7 +248,7 @@ export default function FormContact({
               control={form.control}
               name="enquiryType"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative">
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -263,13 +264,13 @@ export default function FormContact({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="General">General</SelectItem>
-                      <SelectItem value="Support">Support</SelectItem>
-                      <SelectItem value="Sales">Sales</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
+                      <SelectItem value="General">Finance and Accounting</SelectItem>
+                      <SelectItem value="Support">Consulting</SelectItem>
+                      <SelectItem value="Sales">Payroll</SelectItem>
+                      <SelectItem value="Other">Taxation</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="absolute left-0 top-full mt-1 text-xs text-destructive" />
                 </FormItem>
               )}
             />
@@ -277,7 +278,7 @@ export default function FormContact({
               control={form.control}
               name="message"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative mb-5">
                   <FormControl>
                     <Textarea
                       {...field}
@@ -289,7 +290,7 @@ export default function FormContact({
                       })}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="absolute left-0 top-full mt-1 text-xs text-destructive" />
                 </FormItem>
               )}
             />
