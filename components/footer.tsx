@@ -48,8 +48,8 @@ export default async function Footer() {
           </Link>
           
           <div className="mt-6 mb-8">
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
-              {/* Main navigation */}
+            {/* Main navigation - stacks on mobile, horizontal on larger screens */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-6">
               {navItems.map((navItem) => (
                 <Link
                   key={navItem.label}
@@ -62,24 +62,6 @@ export default async function Footer() {
                 </Link>
               ))}
               
-              {/* Services section - inline with other nav items but with a separator */}
-              <div className="flex items-center gap-8">
-                <Separator orientation="vertical" className="h-6" />
-                {/* Services dropdown */}
-                <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
-                  <span className="text-sm font-medium text-foreground/80">Services</span>
-                  {services.map((service: { title: string; href: string }) => (
-                    <Link
-                      key={service.title}
-                      href={service.href}
-                      className="transition-colors hover:text-primary text-foreground/70 text-sm"
-                    >
-                      {service.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
               {/* Contact us link with slightly different styling */}
               <Link
                 href="/contact-us"
@@ -87,6 +69,22 @@ export default async function Footer() {
               >
                 Contact Us
               </Link>
+            </div>
+            
+            {/* Services section - separate section with heading */}
+            <div className="flex flex-col items-center">
+              <span className="text-sm font-medium text-foreground/80 mb-3">Services</span>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-8">
+                {services.map((service: { title: string; href: string }) => (
+                  <Link
+                    key={service.title}
+                    href={service.href}
+                    className="transition-colors hover:text-primary text-foreground/70 text-sm"
+                  >
+                    {service.title}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           
