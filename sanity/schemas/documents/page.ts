@@ -50,6 +50,7 @@ export default defineType({
         { type: "tab-section" },
         { type: "carousel-1" },
         { type: "carousel-2" },
+        { type: "carousel-3"},
         { type: "timeline-row" },
         { type: "cta-1" },
         { type: "logo-cloud-1" },

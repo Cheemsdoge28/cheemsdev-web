@@ -39,6 +39,10 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "renderedTitle",
+      type: "block-content",
+    }),
+    defineField({
       name: "body",
       type: "block-content",
     }),
@@ -93,6 +97,20 @@ export default defineType({
       type: "size-variant",
       title: "Global Tag Size Variant",
       hidden: ({ parent }) => !parent?.useGlobalTagStyle,
+    }),
+    defineField({
+      name: "decoration",
+      type: "string",
+      title: "Background Decoration",
+      description: "Choose a background decoration effect",
+      options: {
+        list: [
+          { title: "None", value: "none" },
+          { title: "Background Beams 1", value: "background-beams-1" },
+          { title: "Background Beams 2", value: "background-beams-2" },
+        ],
+      },
+      initialValue: "none",
     }),
   ],
   preview: {

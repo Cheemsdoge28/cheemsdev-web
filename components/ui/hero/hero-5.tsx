@@ -9,6 +9,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { stegaClean } from "next-sanity";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import SectionContainer from "../section-container";
+import { BackgroundBeams1, BackgroundBeams2 } from "../background-beams";
 
 type ButtonVariant =
   | "default"
@@ -22,7 +23,7 @@ type Size = "default" | "small" | "medium" | "large";
 
 export default function Hero5({
   tagLine,
-  title,
+  renderedTitle,
   body,
   image,
   links,
@@ -31,6 +32,7 @@ export default function Hero5({
   colorVariant = "background",
   textAlign = "left",
   heightVariant = "default",
+  decoration = "none",
   useGlobalTagStyle,
   globalTagVariant,
   globalTagSizeVariant,
@@ -56,8 +58,9 @@ export default function Hero5({
     | "topright"
     | "bottomleft"
     | "bottomright";
+  decoration?: "none" | "background-beams-1" | "background-beams-2";
   tagLine?: string;
-  title?: string;
+  renderedTitle?: any; 
   body?: any;
   image?: Sanity.Image;
   links?: {
@@ -101,18 +104,20 @@ export default function Hero5({
   };
 
   const gradientDirections = {
-    left: "bg-gradient-to-r from-primary/90 via-primary/75 to-transparent",
-    center: "bg-gradient-to-t from-primary/95 via-primary/80 to-primary/70",
-    right: "bg-gradient-to-l from-primary/90 via-primary/75 to-transparent",
-    topleft: "bg-gradient-to-br from-primary/90 via-primary/80 to-transparent",
-    topright: "bg-gradient-to-bl from-primary/90 via-primary/80 to-transparent",
-    bottomleft: "bg-gradient-to-tr from-primary/90 via-primary/80 to-transparent",
-    bottomright: "bg-gradient-to-tl from-primary/90 via-primary/80 to-transparent",
+    left: "bg-gradient-to-r from-background/90 via-background/75 to-transparent",
+    center: "bg-gradient-to-t from-background/95 via-background/80 to-background/70",
+    right: "bg-gradient-to-l from-background/90 via-background/75 to-transparent",
+    topleft: "bg-gradient-to-br from-background/90 via-background/80 to-transparent",
+    topright: "bg-gradient-to-bl from-background/90 via-background/80 to-transparent",
+    bottomleft: "bg-gradient-to-tr from-background/90 via-background/80 to-transparent",
+    bottomright: "bg-gradient-to-tl from-background/90 via-background/80 to-transparent",
   };
 
   const alignment = alignmentClasses[textBlockAlign] ?? alignmentClasses.left;
   const gradient =
     gradientDirections[textBlockAlign] ?? gradientDirections.left;
+
+  const decorationType = stegaClean(decoration);
 
   return (
     <SectionContainer className="px-0" isContainer={false} color={color} padding={padding}>
@@ -133,16 +138,16 @@ export default function Hero5({
         <div className={`absolute inset-0 z-10 ${gradient}`} />
 
         <div className={`relative z-20 flex h-full px-4 md:px-16 lg:px-24 ${alignment}`}>
-          <div className="text-white max-w-4xl flex flex-col gap-y-6 animate-fade-up">
+          <div className="text-primary max-w-4xl flex flex-col gap-y-6 animate-fade-up">
             {tagLine && (
               <h3 className="text-xl font-sans font-semibold">
                 {tagLine}
               </h3>
             )}
 
-            {title && (
+            {renderedTitle && (
               <h1 className="font-bold leading-[1.1]">
-                {title}
+                <PortableTextRenderer value={renderedTitle} />
               </h1>
             )}
 
@@ -208,6 +213,8 @@ export default function Hero5({
             ) : null}
           </div>
         </div>
+        {decorationType === "background-beams-1" && <BackgroundBeams1 />}
+        {decorationType === "background-beams-2" && <BackgroundBeams2 />}
       </div>
     </SectionContainer>
   );

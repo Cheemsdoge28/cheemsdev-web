@@ -4,33 +4,53 @@
 
 @layer base {
   :root {
-    --primary: 215 65% 35%; /* #205295 - was secondary, now primary */
-    --primary-foreground: 220 20% 98%; /* #f8f9fb - keep as light foreground */
-    --background: 240 20% 98%; /* #f8f9fb - near-white */
-    --foreground: 240 15% 10%; /* #23243a - very dark blue/gray for text */
-    --card: 0 0% 100%; /* #fff - cards are pure white for elevation */
-    --card-foreground: 240 15% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 15% 10%;
-    --secondary: 240 100% 13%; /* #000045 - was primary, now secondary */
-    --secondary-foreground: 220 20% 98%; /* #f8f9fb - was primary-foreground */
-    --muted: 220 40% 95%; /* #e8ecf7 - soft muted blue */
-    --muted-foreground: 240 15% 40%;
-    --accent: 45 100% 85%; /* #fff3c4 - pale gold accent */
-    --accent-foreground: 240 15% 10%;
-    --destructive: 0 84% 60%; /* #FF4D4F */
-    --destructive-foreground: 220 20% 98%;
-    --border: 220 30% 85%; /* #d3d9e9 - light blue border */
-    --input: 220 30% 85%;
-    --ring: 215 65% 35%; /* now matches new primary */
-    --chart-1: 215 65% 35%; /* now matches new primary */
-    --chart-2: 240 100% 13%; /* now matches new secondary */
-    --chart-3: 45 100% 85%; /* accent */
-    --chart-4: 340 75% 55%; /* magenta */
-    --chart-5: 160 100% 80%; /* teal */
-    --radius: 0.5rem;
+  --background: 0 0% 0%;
+  --foreground: 223.81 -172.52% 100%;
+  --card: 223.81 0% 3.55%;
+  --card-foreground: 223.81 -172.52% 100%;
+  --popover: 223.81 0% 6.87%;
+  --popover-foreground: 223.81 -172.52% 100%;
+  --primary: 223.81 -172.52% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 223.81 0% 13.15%;
+  --secondary-foreground: 223.81 -172.52% 100%;
+  --muted: 223.81 0% 11.30%;
+  --muted-foreground: 223.81 0% 64.47%;
+  --accent: 223.81 0% 19.89%;
+  --accent-foreground: 223.81 -172.52% 100%;
+  --destructive: 359.91 100.25% 67.88%;
+  --destructive-foreground: 0 0% 0%;
+  --border: 223.81 0% 14.09%;
+  --input: 223.81 0% 19.89%;
+  --ring: 223.81 0% 64.47%;
+  --chart-1: 40.67 100.24% 50.92%;
+  --chart-2: 218.16 90.04% 55.16%;
+  --chart-3: 223.81 0% 45.61%;
+  --chart-4: 223.81 0% 32.31%;
+  --chart-5: 223.81 0% 89.56%;
+  --sidebar: 223.81 0% 6.87%;
+  --sidebar-foreground: 223.81 -172.52% 100%;
+  --sidebar-primary: 223.81 -172.52% 100%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 223.81 0% 19.89%;
+  --sidebar-accent-foreground: 223.81 -172.52% 100%;
+  --sidebar-border: 223.81 0% 19.89%;
+  --sidebar-ring: 223.81 0% 64.47%;
+  --font-sans: Geist, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Geist Mono, monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 1px 2px 0px 0 0% 0% / 0.09;
+  --shadow-xs: 0px 1px 2px 0px 0 0% 0% / 0.09;
+  --shadow-sm: 0px 1px 2px 0px 0 0% 0% / 0.18, 0px 1px 2px -1px 0 0% 0% / 0.18;
+  --shadow: 0px 1px 2px 0px 0 0% 0% / 0.18, 0px 1px 2px -1px 0 0% 0% / 0.18;
+  --shadow-md: 0px 1px 2px 0px 0 0% 0% / 0.18, 0px 2px 4px -1px 0 0% 0% / 0.18;
+  --shadow-lg: 0px 1px 2px 0px 0 0% 0% / 0.18, 0px 4px 6px -1px 0 0% 0% / 0.18;
+  --shadow-xl: 0px 1px 2px 0px 0 0% 0% / 0.18, 0px 8px 10px -1px 0 0% 0% / 0.18;
+  --shadow-2xl: 0px 1px 2px 0px 0 0% 0% / 0.45;
   }
 }
+
 
 @layer base {
   * {

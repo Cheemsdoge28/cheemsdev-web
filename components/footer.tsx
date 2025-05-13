@@ -44,7 +44,7 @@ export default async function Footer() {
       <div className="container mx-auto py-8">
         <div className="flex flex-col items-center">
           <Link className="font-semibold text-primary" href="/" aria-label="Home page">
-            {STORE_NAME} Private Limited
+            {STORE_NAME} 
           </Link>
           
           <div className="mt-6 mb-8">
@@ -89,7 +89,7 @@ export default async function Footer() {
           </div>
           
           <div className="text-xs text-foreground/50 text-center">
-            <p>&copy; {getCurrentYear()} {STORE_NAME} Private Limited. All rights reserved.</p>
+            <p>&copy; {getCurrentYear()} {STORE_NAME} </p>
           </div>
         </div>
       </div>

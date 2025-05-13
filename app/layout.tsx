@@ -13,8 +13,8 @@ const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: {
-    template: "%s | RISEBIT Fintech",
-    default: "RISEBIT Fintech",
+    template: "%s | Cheemsdev",
+    default: "Cheemsdev",
   },
   openGraph: {
     images: [
@@ -42,11 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/favicon.ico" />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased overscroll-none dark:bg-background dark:text-foreground",
+          "min-h-screen bg-background font-sans antialiased overscroll-none",
           fontSans.variable
         )}
       >

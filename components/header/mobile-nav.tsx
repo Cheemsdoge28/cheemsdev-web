@@ -32,7 +32,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
           variant="ghost"
           className="w-[1.75rem] p-5 focus-visible:ring-1 focus-visible:ring-offset-1"
         >
-          <TextAlignRightIcon className="text-black" />
+          <TextAlignRightIcon className="text-primary" />
         </Button>
       </SheetTrigger>
       <SheetContent>

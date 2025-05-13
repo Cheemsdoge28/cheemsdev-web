@@ -114,7 +114,7 @@ export default function FormContact({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
         });
-
+        console.log(JSON.stringify(values));
         const result = await response.json();
 
         if (response.ok) {

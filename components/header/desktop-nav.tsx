@@ -42,7 +42,7 @@ export default function DesktopNav({
             <DropdownMenuTrigger asChild>
               <Button
                 variant="vanilla"
-                className={`transition-colors p-0 text-base text-primary bg-background hover:text-primary focus-visible:ring-primary ${(isServicesActive || isDropdownOpen) ? 'font-semibold underline text-primary' : 'text-foreground/60'}`}
+                className={`transition-colors p-0 text-base text-primary bg-none hover:text-primary/50 focus-visible:ring-primary ${(isServicesActive || isDropdownOpen) ? 'font-semibold underline text-primary/60' : 'text-primary/90'}`}
                 aria-haspopup="menu"
                 aria-expanded={isDropdownOpen}
               >
@@ -78,7 +78,7 @@ export default function DesktopNav({
             prefetch={true}
             target={navItem.target ? "_blank" : undefined}
             rel={navItem.target ? "noopener noreferrer" : undefined}
-            className={`transition-colors hover:text-foreground/80 text-base ${pathname === navItem.href ? 'text-primary font-semibold underline' : 'text-foreground/60'}`}
+            className={`transition-colors hover:text-primary/50 text-base ${pathname === navItem.href ? 'text-primary font-semibold underline' : 'text-primary/90'}`}
           >
             {navItem.label}
           </Link>

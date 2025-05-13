@@ -1,12 +1,13 @@
 import Image from "next/image";
+import SVGPainter from "./svgpainter";
 
 export default function Logo() {
   return (
     <Image
-      src="/images/risebit_logo.svg"
-      alt="Risebit Logo"
-      width={48}
-      height={48}
+      src="/images/logo.svg"
+      alt="Cheemsdev Logo"
+      width={96}
+      height={96}
     />
   );
 }

@@ -19,12 +19,12 @@ import { customDocumentActions } from "./plugins/customDocumentActions";
 import { assist } from "@sanity/assist";
 import { imageHotspotArrayPlugin } from "sanity-plugin-hotspot-array";
 import { embeddingsIndexDashboard } from "@sanity/embeddings-index-ui";
-
+import { HEADER_NAME } from "./lib/constants";
 export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  name: "RBIT",
+  name: HEADER_NAME,
   // Add and edit the content schema in the './sanity/schema' folder
   schema,
   plugins: [

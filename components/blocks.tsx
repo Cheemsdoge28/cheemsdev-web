@@ -9,6 +9,7 @@ import GridFeatureCard from "@/components/ui/grid/grid-feature-card";
 import TabSection from "./ui/tab-section/tab-section";
 import Carousel1 from "@/components/ui/carousel/carousel-1";
 import Carousel2 from "@/components/ui/carousel/carousel-2";
+import Carousel3 from "@/components/ui/carousel/carousel-3";
 import TimelineRow from "@/components/ui/timeline/timeline-row";
 import Cta1 from "@/components/ui/cta/cta-1";
 import LogoCloud1 from "@/components/ui/logo-cloud/logo-cloud-1";
@@ -33,6 +34,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   "tab-section": TabSection,
   "carousel-1": Carousel1,
   "carousel-2": Carousel2,
+  "carousel-3": Carousel3,
   "timeline-row": TimelineRow,
   "cta-1": Cta1,
   "logo-cloud-1": LogoCloud1,

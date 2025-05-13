@@ -75,8 +75,8 @@ export default function Carousel1({
                   >
                     <Image
                       className="object-cover"
-                      src={urlFor(image.asset).url()}
-                      alt={image.alt || ""}
+                      src={urlFor(image.asset).url() ?? null}
+                      alt={image.alt ?? ""}
                       fill
                       placeholder={
                         image?.asset?.metadata?.lqip ? "blur" : undefined

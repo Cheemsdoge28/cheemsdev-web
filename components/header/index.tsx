@@ -5,7 +5,7 @@ import DesktopNav from "@/components/header/desktop-nav";
 
 import { fetchServicesPages } from "@/app/(main)/actions";
 import { HEADER_NAME } from "@/lib/constants";
-
+import { Separator } from "../ui/seperator";
 
 export default async function Header() {
   const servicesData = await fetchServicesPages();
@@ -48,9 +48,10 @@ export default async function Header() {
           className="flex items-center gap-2"
         >
           <Logo />
-          <p className="font-bold text-2xl text-primary">
+          <p className="font-bold font-mono tracking-widest text-5xl text-primary">
             {HEADER_NAME}
           </p>
+          
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
           <DesktopNav navItems={navItems} />
@@ -59,6 +60,7 @@ export default async function Header() {
           <MobileNav navItems={navItems} />
         </div>
       </div>
+      <Separator/>
     </header>
   );
 }
