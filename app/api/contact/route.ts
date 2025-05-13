@@ -56,7 +56,7 @@ const getEmailHeader = (): string => {
       font-family: ${headerStyles.fontFamily};
     ">
       <div style="display: inline-flex; align-items: center; gap: 12px;">
-        <img src="${NEXT_PUBLIC_SITE_URL}/images/logo.svg" alt="Logo" width="40" height="40" style="vertical-align: ${logoStyles.verticalAlign};" />
+        <img src="${NEXT_PUBLIC_SITE_URL}/images/logo.png" alt="Logo" width="40" height="40" style="vertical-align: ${logoStyles.verticalAlign};" />
         <span style="
           font-size: ${titleStyles.fontSize};
           font-weight: ${titleStyles.fontWeight};
