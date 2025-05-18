@@ -1,304 +1,289 @@
-"use client";
+"use client"
 
-import React, { useEffect, useRef, useState, createContext, useContext } from "react";
-import SectionContainer from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
-import { urlFor } from "@/sanity/lib/image";
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import { ArrowLeft, ArrowRight, X } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { useOutsideClick } from "@/hooks/use-outside-click"
+import SectionContainer from "../section-container"
 
-// You'll need to add these icons to your project or use alternatives
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useOutsideClick } from "@/hooks/use-outside-click";
-
-const CAROUSEL_SIZES = {
-  one: "basis-full",
-  two: "basis-full md:basis-1/2",
-  three: "basis-full md:basis-1/2 lg:basis-1/3",
-} as const;
-
-const IMAGE_SIZES = {
-  one: "h-[30rem] sm:h-[40rem] lg:h-[31.25rem] xl:h-[35rem]",
-  two: "h-[30rem] md:h-[22rem] lg:h-[30rem] xl:h-[35rem]",
-  three: "h-[30rem] md:h-[20rem] xl:h-[25rem]",
-} as const;
-
-type CarouselSize = keyof typeof CAROUSEL_SIZES;
-
-export const CarouselContext = createContext<{
-  onCardClose: (index: number) => void;
-  currentIndex: number;
-}>({
-  onCardClose: () => {},
-  currentIndex: 0,
-});
-
-interface Carousel1Props {
-  padding: {
-    top: boolean;
-    bottom: boolean;
-  };
-  colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
-  size: CarouselSize;
-  indicators: "none" | "dots" | "count";
-  images?: Sanity.Image[];
+interface CarouselProps {
+  readonly images: readonly {
+    readonly src: string
+    readonly alt: string
+    readonly asset?: { readonly _id: string }
+  }[]
+  readonly colorVariant?: "primary" | "secondary" | "card" | "accent" | "destructive" | "background" | "transparent"
+  readonly size?: "one" | "two" | "three"
+  readonly urlFor?: (asset: any) => { readonly url: () => string }
+  readonly padding?: {
+    readonly top: boolean
+    readonly bottom: boolean
+  }
 }
 
-export default function Carousel1({
-  padding,
-  colorVariant,
-  size = "one",
-  indicators = "none",
-  images,
-}: Partial<Carousel1Props>) {
-  const color = stegaClean(colorVariant);
-  const stegaSize = stegaClean(size);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function Carousel3({ 
+  images, 
+  size = "one", 
+  urlFor,
+  colorVariant = "background",
+  padding = { top: true, bottom: true }
+}: CarouselProps) {
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    checkScrollability();
-  }, [images]);
+    checkScrollability()
+    window.addEventListener("resize", checkScrollability)
+    return () => window.removeEventListener("resize", checkScrollability)
+  }, [images])
 
   const checkScrollability = () => {
     if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current
+      setCanScrollLeft(scrollLeft > 0)
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth)
     }
-  };
+  }
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" })
     }
-  };
+  }
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" })
     }
-  };
+  }
 
-  const handleCardClose = (index: number) => {
-    if (carouselRef.current) {
-      setCurrentIndex(index);
-    }
-  };
+  if (!images || images.length === 0) return null
 
-  if (!images || images.length === 0) return null;
-
-  const carouselItems = images.map((image, index) => (
-    <CarouselCard 
-      key={`card-${index}`} 
-      image={image} 
-      index={index} 
-      size={stegaSize}
-    />
-  ));
   return (
-    <SectionContainer color={color} padding={padding}>
-      <CarouselContext.Provider
-        value={{ onCardClose: handleCardClose, currentIndex }}
-      >
-        <div className="relative w-full">
-          <div
-            className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-10 [scrollbar-width:none] md:py-20"
-            ref={carouselRef}
-            onScroll={checkScrollability}
-          >
-            <div
-              className="absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
-            ></div>
-
-            <div className="flex flex-row justify-start gap-4 pl-4 mx-auto max-w-7xl">
-              {images.map((image, index) => (
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      duration: 0.5,
-                      delay: 0.2 * index,
-                      ease: "easeOut",
-                    },
-                  }}
-                  key={`card-${index}-${image.alt}`}
-                  className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
-                >
-                  <CarouselCard 
-                    image={image} 
-                    index={index}
-                    size={stegaSize}
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="mr-10 flex justify-end gap-2">
-            <button
-              className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 disabled:opacity-50 transition-all"
-              onClick={scrollLeft}
-              disabled={!canScrollLeft}
-            >
-              <ChevronLeft className="h-6 w-6 text-foreground" />
-            </button>
-            <button
-              className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 disabled:opacity-50 transition-all"
-              onClick={scrollRight}
-              disabled={!canScrollRight}
-            >
-              <ChevronRight className="h-6 w-6 text-foreground" />
-            </button>
+    <SectionContainer color={colorVariant} padding={padding}>
+      <div className="relative">
+        <div
+          className="flex overflow-x-scroll scroll-smooth py-8 [scrollbar-width:none]"
+          ref={carouselRef}
+          onScroll={checkScrollability}
+        >
+          <div className="flex gap-4">
+            {images.map((image, index) => (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.5,
+                    delay: 0.1 * index,
+                    ease: "easeOut",
+                  },
+                }}
+                key={`card-${index}`}
+              >
+                <CarouselCard image={image} index={index} size={size} urlFor={urlFor} />
+              </motion.div>
+            ))}
           </div>
         </div>
-      </CarouselContext.Provider>
+
+        <div className="mt-4 flex justify-end gap-2 pr-4">
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary disabled:opacity-50"
+            onClick={scrollLeft}
+            disabled={!canScrollLeft}
+            aria-label="Scroll left"
+          >
+            <ArrowLeft className="h-5 w-5 text-secondary-foreground" />
+          </button>
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary disabled:opacity-50"
+            onClick={scrollRight}
+            disabled={!canScrollRight}
+            aria-label="Scroll right"
+          >
+            <ArrowRight className="h-5 w-5 text-secondary-foreground" />
+          </button>
+        </div>
+      </div>
     </SectionContainer>
-  );
+  )
 }
 
 interface CarouselCardProps {
-  image: Sanity.Image;
-  index: number;
-  size: CarouselSize;
+  image: {
+    src: string
+    alt: string
+    asset?: { _id: string }
+  }
+  index: number
+  size: "one" | "two" | "three"
+  urlFor?: (asset: any) => { url: () => string }
 }
 
-const CarouselCard = ({ image, index, size }: CarouselCardProps) => {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const { onCardClose } = useContext(CarouselContext);
+const CarouselCard = ({ image, index, size, urlFor }: CarouselCardProps) => {
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        handleClose();
+        setOpen(false)
       }
     }
 
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto"
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [open])
 
-  useOutsideClick(containerRef, () => handleClose());
+  useOutsideClick(containerRef, () => setOpen(false))
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const imageUrl = image.asset?._id && urlFor ? urlFor(image.asset).url() : image.src
 
-  const handleClose = () => {
-    setOpen(false);
-    onCardClose(index);
-  };
-
-  const cardWidth = size === "one" ? "w-full max-w-[60rem]" : 
-                   size === "two" ? "w-56 md:w-96" : 
-                   "w-56 md:w-80";
-
-  const imageUrl = image?.asset?._id ? urlFor(image.asset).url() : "";
-  const altText = image?.alt ?? "Carousel image";
+  const [category, title] = image.alt?.includes(":") ? image.alt.split(":", 2) : [null, image.alt]
 
   return (
     <>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-50 h-screen overflow-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 h-full w-full bg-black/80 backdrop-blur-lg"
+              className="absolute inset-0 bg-background/95 backdrop-blur-md"
+              onClick={() => setOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
               ref={containerRef}
               layoutId={`card-${index}`}
-              className="relative z-[60] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-card p-4 font-sans md:p-10"
+              className="relative z-50 m-4 max-h-[85vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-card shadow-xl"
             >
-              <button
-                className="sticky top-4 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-primary"
-                onClick={handleClose}
-              >
-                <X className="h-6 w-6 text-primary-foreground" />
-              </button>
-              
-              <div className="py-10">
-                <div className="relative w-full aspect-video overflow-hidden rounded-lg">
-                  <Image
-                    src={imageUrl}
-                    alt={altText}
-                    fill
-                    className="object-cover"
-                    placeholder={
-                      image?.asset?.metadata?.lqip ? "blur" : undefined
-                    }
-                    blurDataURL={image.asset?.metadata?.lqip || ""}
-                    quality={100}
-                  />
-                </div>
-                {image.alt && (
-                  <p className="mt-4 text-xl font-semibold text-foreground">{image.alt}</p>
+              <div className="flex items-center justify-between p-4">
+                {category && (
+                  <motion.p layoutId={`category-${index}`} className="text-base font-medium">
+                    {category}
+                  </motion.p>
+                )}
+                <button
+                  className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-primary hover:bg-primary/90 transition-colors"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close"
+                >
+                  <X className="h-5 w-5 text-primary-foreground" />
+                </button>
+              </div>
+
+              <motion.h2 layoutId={`title-${index}`} className="px-4 md:px-16 lg:px-24 text-2xl font-semibold md:text-3xl">
+                {title}
+              </motion.h2>
+
+              <div className="overflow-y-auto p-4">
+                {imageUrl && (
+                  <motion.div
+                    className="relative aspect-video w-full overflow-hidden rounded-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <BlurImage src={imageUrl} alt={title} fill className="object-cover" />
+                  </motion.div>
                 )}
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-      
+
       <motion.button
         layoutId={`card-${index}`}
-        onClick={handleOpen}
-        className={cn(
-          "relative z-10 overflow-hidden rounded-3xl bg-card",
-          cardWidth,
-          IMAGE_SIZES[size]
-        )}
+        onClick={() => setOpen(true)}
+        className="group relative flex h-72 w-60 flex-col items-start overflow-hidden rounded-xl bg-card shadow-md transition-all hover:shadow-lg md:h-80 md:w-72"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full w-50 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-        
-        {image.alt && (
-          <div className="relative z-40 p-8">
-            <motion.p
-              layoutId={`title-${index}`}
-              className="mt-2 max-w-xs text-left font-sans text-xl font-semibold text-white md:text-3xl"
-            >
-              {image.alt}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20" />
+
+        <div className="relative z-10 flex h-full w-full flex-col justify-end p-4">
+          <div className="transform transition-transform duration-300 group-hover:translate-y-[-4px]">
+            {category && (
+              <motion.p layoutId={`category-${index}`} className="mb-1 text-sm font-medium text-white/90">
+                {category}
+              </motion.p>
+            )}
+            <motion.p layoutId={`title-${index}`} className="text-lg font-bold leading-tight text-white md:text-xl">
+              {title}
             </motion.p>
           </div>
+        </div>
+
+        {imageUrl && (
+          <div className="absolute inset-0 overflow-hidden">
+            <BlurImage
+              src={imageUrl}
+              alt={title}
+              fill
+              className="scale-100 transform object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         )}
-        
-        <Image
-          src={imageUrl}
-          alt={altText}
-          fill
-          className="absolute inset-0 z-10 object-cover transition duration-300"
-          placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
-          blurDataURL={image.asset?.metadata?.lqip || ""}
-          quality={90}
-        />
       </motion.button>
     </>
-  );
-};
+  )
+}
+
+const BlurImage = ({
+  src,
+  alt,
+  className,
+  fill,
+  ...rest
+}: {
+  src: string
+  alt: string
+  className?: string
+  fill?: boolean
+  [key: string]: any
+}) => {
+  const [isLoading, setLoading] = useState(true)
+
+  return (
+    <>
+      {fill ? (
+        <Image
+          src={src || "/placeholder.svg"}
+          alt={alt || "Image"}
+          fill
+          className={cn("transition duration-300", isLoading ? "blur-sm" : "blur-0", className)}
+          onLoadingComplete={() => setLoading(false)}
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          {...rest}
+        />
+      ) : (
+        <img
+          src={src || "/placeholder.svg"}
+          alt={alt || "Image"}
+          className={cn("h-full w-full transition duration-300", isLoading ? "blur-sm" : "blur-0", className)}
+          onLoad={() => setLoading(false)}
+          loading="lazy"
+          decoding="async"
+          {...rest}
+        />
+      )}
+    </>
+  )
+}

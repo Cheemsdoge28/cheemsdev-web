@@ -48,9 +48,9 @@ export default async function Header() {
           className="flex items-center gap-2"
         >
           <Logo />
-          <p className="font-bold font-mono tracking-widest text-5xl text-primary">
+            <p className="font-bold font-mono tracking-widest text-5xl text-primary hidden sm:block">
             {HEADER_NAME}
-          </p>
+            </p>
           
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
