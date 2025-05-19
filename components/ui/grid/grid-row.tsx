@@ -56,8 +56,8 @@ export default function GridRow({
         <div
           key={`grid-row-${columns.map((col) => col._key).join("-")}`}
           className={cn(
-            // Use bento-style grid
-            "mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-3"
+            // Use bento-style grid with flexible row heights
+            "mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 auto-rows-[minmax(2rem,auto)] md:auto-rows-[minmax(2rem,auto)] md:grid-cols-3"
           )}
         >
           {columns.map((block: Sanity.Block) => {

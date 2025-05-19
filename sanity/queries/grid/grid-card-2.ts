@@ -4,6 +4,7 @@ export const gridCard2Query = groq`
   _type == "grid-card-2" => {
     _type,
     title,
+    excerpt,
     colorVariant,
     sizeVariant,
     bentoVariant,

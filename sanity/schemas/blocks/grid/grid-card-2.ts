@@ -14,6 +14,12 @@ export default defineType({
       description: "Optional override for title (can be extracted from image alt)",
     }),
     defineField({
+      name: "excerpt",
+      type: "text",
+      title: "Excerpt",
+      description: "Short summary or description for this card.",
+    }),
+    defineField({
       name: "image",
       type: "image",
       description: "Image with alt text format 'Category: Title' for automatic extraction",
