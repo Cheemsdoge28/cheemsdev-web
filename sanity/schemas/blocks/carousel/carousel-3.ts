@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { STACK_ALIGN, SECTION_WIDTH } from "@/sanity/schemas/blocks/shared/layout-variants";
 
 export default defineType({
   name: "carousel-3",
@@ -44,6 +45,26 @@ export default defineType({
       },
       initialValue: "background",
     }),
+     defineField({
+          name: "sectionWidth",
+          type: "string",
+          title: "Section Width",
+          options: {
+            list: SECTION_WIDTH.map(({ title, value }) => ({ title, value })),
+            layout: "radio",
+          },
+          initialValue: "default",
+        }),
+        defineField({
+          name: "stackAlign",
+          type: "string",
+          title: "Stack Layout Alignment",
+          options: {
+            list: STACK_ALIGN.map(({ title, value }) => ({ title, value })),
+            layout: "radio",
+          },
+          initialValue: "left",
+        }),
     defineField({
       name: "size",
       title: "Card Size",

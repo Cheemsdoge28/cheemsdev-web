@@ -121,7 +121,7 @@ export default function Hero5({
 
   return (
     <SectionContainer className="px-0" isContainer={false} color={color} padding={padding}>
-      <div className={`relative w-full ${height} overflow-hidden`}>
+      <div className={`relative w-full ${height} overflow-y-visible`}>
         {imageUrl && (
           <Image
             src={imageUrl}
@@ -213,7 +213,7 @@ export default function Hero5({
             ) : null}
           </div>
         </div>
-        {decorationType === "background-beams-1" && <BackgroundBeams1 />}
+        {decorationType === "background-beams-1" && <BackgroundBeams1/>}
         {decorationType === "background-beams-2" && <BackgroundBeams2 />}
       </div>
     </SectionContainer>

@@ -5,6 +5,7 @@ import Hero4 from "@/components/ui/hero/hero-4";
 import SectionHeader from "@/components/ui/section-header";
 import SplitRow from "@/components/ui/split/split-row";
 import GridRow from "@/components/ui/grid/grid-row";
+import GridCard2 from "@/components/ui/grid/grid-card-2";
 import GridFeatureCard from "@/components/ui/grid/grid-feature-card";
 import TabSection from "./ui/tab-section/tab-section";
 import Carousel1 from "@/components/ui/carousel/carousel-1";
@@ -46,6 +47,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   "hero-hotspot": HeroHotspot,
   textBlock: TextBlock,
   "grid-feature-card": GridFeatureCard,
+  "grid-card-2": GridCard2,
 };
 
 

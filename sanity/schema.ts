@@ -19,6 +19,7 @@ import { buttonVariant } from "./schemas/blocks/shared/button-variant";
 import { sizeVariant } from "./schemas/blocks/shared/size-variant";
 import { heightVariant } from "./schemas/blocks/shared/height-variant";
 import sectionPadding from "./schemas/blocks/shared/section-padding";
+import { bentoVariant } from "./schemas/blocks/shared/bento-variant";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
 import hero2 from "./schemas/blocks/hero/hero-2";
@@ -34,6 +35,7 @@ import splitImage from "./schemas/blocks/split/split-image";
 import splitInfoList from "./schemas/blocks/split/split-info-list";
 import splitInfo from "./schemas/blocks/split/split-info";
 import gridCard from "./schemas/blocks/grid/grid-card";
+import gridCard2 from "./schemas/blocks/grid/grid-card-2";
 import gridFeatureCard from "./schemas/blocks/grid/grid-feature-card";
 import pricingCard from "./schemas/blocks/grid/pricing-card";
 import gridPost from "./schemas/blocks/grid/grid-post";
@@ -83,6 +85,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     sizeVariant,
     heightVariant,
     sectionPadding,
+    bentoVariant,
     // blocks
     hero1,
     hero2,
@@ -98,6 +101,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     splitInfoList,
     splitInfo,
     gridCard,
+    gridCard2,
     gridFeatureCard,
     pricingCard,
     gridPost,

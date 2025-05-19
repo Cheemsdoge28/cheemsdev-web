@@ -34,6 +34,7 @@ export default defineType({
       type: "array",
       of: [
         { type: "grid-card" },
+        { type: "grid-card-2" },
         { type: "grid-post" },
         { type: "pricing-card" },
         { type: "grid-feature-card" }, // New feature card type

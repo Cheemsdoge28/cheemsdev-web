@@ -3,6 +3,7 @@ import SectionContainer from "@/components/ui/section-container";
 import { stegaClean } from "next-sanity";
 // import only the components you need
 import GridCard from "./grid-card";
+import GridCard2 from "./grid-card-2";
 import PricingCard from "./pricing-card";
 import GridPost from "./grid-post";
 import ProductCard from "../product-card";
@@ -22,17 +23,25 @@ interface Grid1Props {
     | "background"
     | "transparent";
   gridColumns: "grid-cols-2" | "grid-cols-3" | "grid-cols-4";
-  columns: Sanity.Block[];
+  columns: Array<
+    (Sanity.Block & { bentoVariant?: "none" | "bento-3" | "bento-2" | "bento-1" })
+  >;
 }
 
 // map all components you need
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   "grid-card": GridCard,
+  "grid-card-2": GridCard2,
   "pricing-card": PricingCard,
   "grid-post": GridPost,
   "grid-feature-card": GridFeatureCard,
   product: ProductCard,
 };
+
+// Type guard for grid-card-2
+function isGridCard2(block: any): block is { bentoVariant?: string } {
+  return block && block._type === "grid-card-2";
+}
 
 export default function GridRow({
   padding,
@@ -47,8 +56,8 @@ export default function GridRow({
         <div
           key={`grid-row-${columns.map((col) => col._key).join("-")}`}
           className={cn(
-            `grid grid-cols-1 gap-6`,
-            `lg:${stegaClean(gridColumns)}`
+            // Use bento-style grid
+            "mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-3"
           )}
         >
           {columns.map((block: Sanity.Block) => {
@@ -56,6 +65,17 @@ export default function GridRow({
             if (!Component) {
               // Fallback for unknown block types to debug
               return <div data-type={block._type} key={block._key} />;
+            }
+            // Pass bentoVariant to grid-card-2 if present
+            if (isGridCard2(block)) {
+              return (
+                <Component
+                  {...block}
+                  color={color}
+                  bentoVariant={block.bentoVariant}
+                  key={block._key}
+                />
+              );
             }
             return <Component {...block} color={color} key={block._key} />;
           })}

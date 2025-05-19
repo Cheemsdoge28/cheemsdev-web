@@ -76,7 +76,7 @@ export default function TabSection({
         </div>
       )}
 
-      <div key={`grid-row-2-${columns?.map((col) => col._key).join("-") ?? "default-2"}`} className="space-y-12">
+      <div className="space-y-12">
         {columns?.map((block) => {
           const Component = componentMap[block._type];
           if (!Component) {

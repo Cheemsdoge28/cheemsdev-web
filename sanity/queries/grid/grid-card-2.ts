@@ -1,15 +1,13 @@
 import { groq } from "next-sanity";
 
-export const carousel3Query = groq`
-  _type == "carousel-3" => {
+export const gridCard2Query = groq`
+  _type == "grid-card-2" => {
     _type,
-    padding,
+    title,
     colorVariant,
-    sectionWidth,
-    stackAlign,
-    size,
-    indicators,
-    images[]{
+    sizeVariant,
+    bentoVariant,
+    image{
       asset->{
         _id,
         url,
@@ -22,8 +20,11 @@ export const carousel3Query = groq`
           }
         }
       },
-      alt,
-      description
+      alt
+    },
+    link{
+      href,
+      target
     },
   },
 `;
