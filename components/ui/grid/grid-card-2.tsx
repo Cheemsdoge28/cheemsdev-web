@@ -36,7 +36,7 @@ export default function GridCard2({
   const isSquare = safeColSpan === safeRowSpan && safeColSpan > 1
   const isRect = !isSquare && (safeColSpan > 1 || safeRowSpan > 1)
   const isBento = safeColSpan > 1 || safeRowSpan > 1
-  const extractedTitle = title ?? image?.alt
+  const extractedTitle = title ?? image?.alt ?? ""
   const displayTitle = extractedTitle?.includes(":") ? extractedTitle.split(":", 2)[1]?.trim() : extractedTitle
   const imageUrl = image?.asset?._id ? urlFor(image.asset).url() : ""
   const blurDataURL = image?.asset?.metadata?.lqip
