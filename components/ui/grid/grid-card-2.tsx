@@ -54,7 +54,7 @@ export default function GridCard2({
       <div className={cn(
         "relative overflow-hidden flex-shrink-0 rounded-[1.5rem]",
         isSmall && "h-16 w-16 rounded-[2rem]",
-        isRect && safeColSpan > safeRowSpan && "w-1/2",
+        isRect && safeColSpan > safeRowSpan && "w-full",
         isRect && safeRowSpan > safeColSpan && "w-full aspect-[3/2]",
         !isRect && !isSmall && "w-full aspect-[4/3]",
         "h-full" // Ensure image block fills parent height
@@ -83,7 +83,7 @@ export default function GridCard2({
       "flex flex-col",
       isSmall 
         ? "flex-1 min-w-0 items-center text-center px-2 gap-1" 
-        : "justify-end w-full h-full gap-2"
+        : "justify-center w-full h-full gap-2"
     )}>
       {displayTitle && (
         <p className={cn(
@@ -247,37 +247,27 @@ export default function GridCard2({
       )
     } else {      
       return (
-        <div
-          className={cn(
-            "group relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem]   shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
-            "h-full w-full",
-            "aspect-square",
-            color === "primary" && "bg-primary text-primary-foreground",
-            color === "secondary" && "bg-secondary text-secondary-foreground",
-            color === "accent" && "bg-accent text-accent-foreground",
-            color === "destructive" && "bg-destructive text-destructive-foreground",
-            color === "transparent" && "bg-transparent border-transparent shadow-none",
-            color === "background" && "bg-background text-foreground",
-            isClickable && "hover:scale-[1.02] hover:border-accent/40",
-          )}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-background/20 z-0" />
-          <div className="absolute inset-0 overflow-hidden z-0">
-            <Image
-              src={imageUrl || "/placeholder.svg"}
-              alt={image.alt ?? ""}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              placeholder={blurDataURL ? "blur" : undefined}
-              blurDataURL={blurDataURL ?? ""}
-              quality={90}
-              sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw"
-            />
-          </div>          
-          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4 gap-2">
-            {ContentBlock()}
+        <div            
+            className={cn(
+              "group relative overflow-hidden rounded-[2rem] border border-border/90 shadow-md transition-all duration-300",
+              "h-full w-full",
+              "flex flex-col p-4 gap-4",
+              safeColSpan > safeRowSpan ? "flex-row" : "flex-col",
+              safeColSpan !== safeRowSpan && "aspect-[4/3]", // Use aspect ratio instead of fixed dimensions
+              color === "primary" && "bg-primary text-primary-foreground",
+              color === "secondary" && "bg-secondary text-secondary-foreground",
+              color === "accent" && "bg-accent text-accent-foreground",
+              color === "destructive" && "bg-destructive text-destructive-foreground",
+              color === "transparent" && "bg-transparent border-none shadow-none",
+              color === "background" && "bg-background text-foreground",
+              isClickable
+                ? "hover:shadow-xl hover:scale-[1.04] hover:border-accent/60 hover:bg-gradient-to-r hover:from-accent/10 hover:to-background/80"
+                : "hover:shadow-lg hover:border-border",
+            )}
+          >
+            <div className="flex-1 h-full">{ImageBlock()}</div>
+            <div className="flex-1 h-full">{ContentBlock()}</div>
           </div>
-        </div>
       )
     }
   }  
@@ -301,7 +291,7 @@ export default function GridCard2({
               color === "background" && "bg-background text-foreground",
               isClickable
                 ? "hover:shadow-xl hover:scale-[1.04] hover:border-accent/60 hover:bg-gradient-to-r hover:from-accent/10 hover:to-background/80"
-                : "hover:shadow-lg hover:bg-muted/40",
+                : "hover:shadow-lg hover:border-bg",
             )}
           >
             <div className="flex-1 h-full">{ImageBlock()}</div>
@@ -310,7 +300,7 @@ export default function GridCard2({
         ) : (
           <div            
             className={cn(
-              "group relative overflow-hidden rounded-[2rem] border border-border shadow-md transition-all duration-300",
+              "group relative overflow-hidden rounded-[2rem] border border-border/90 shadow-md transition-all duration-300",
               "h-full w-full",
               "flex p-4 gap-4",
               safeColSpan > safeRowSpan ? "flex-row" : "flex-col",
@@ -323,7 +313,7 @@ export default function GridCard2({
               color === "background" && "bg-background text-foreground",
               isClickable
                 ? "hover:shadow-xl hover:scale-[1.04] hover:border-accent/60 hover:bg-gradient-to-r hover:from-accent/10 hover:to-background/80"
-                : "hover:shadow-lg hover:bg-muted/40",
+                : "hover:shadow-lg hover:border-border",
             )}
           >
             <div className="flex-1 h-full">{ImageBlock()}</div>
