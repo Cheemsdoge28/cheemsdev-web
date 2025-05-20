@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import SectionContainer from "@/components/ui/section-container";
 import { stegaClean } from "next-sanity";
-// import only the components you need
 import GridCard from "./grid-card";
 import GridCard2 from "./grid-card-2";
 import PricingCard from "./pricing-card";
@@ -24,11 +23,13 @@ interface Grid1Props {
     | "transparent";
   gridColumns: "grid-cols-2" | "grid-cols-3" | "grid-cols-4";
   columns: Array<
-    (Sanity.Block & { bentoVariant?: "none" | "bento-3" | "bento-2" | "bento-1" })
+    (Sanity.Block & {
+      bentoColSpan?: 1 | 2 | 3 | 4;
+      bentoRowSpan?: 1 | 2 | 3 | 4;
+    })
   >;
 }
 
-// map all components you need
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   "grid-card": GridCard,
   "grid-card-2": GridCard2,
@@ -38,9 +39,10 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   product: ProductCard,
 };
 
-// Type guard for grid-card-2
-function isGridCard2(block: any): block is { bentoVariant?: string } {
-  return block && block._type === "grid-card-2";
+function validateSpan(span: number | undefined): 1 | 2 | 3 | 4 {
+  if (!span || span < 1) return 1;
+  if (span > 4) return 4;
+  return span as 1 | 2 | 3 | 4;
 }
 
 export default function GridRow({
@@ -50,37 +52,51 @@ export default function GridRow({
   columns,
 }: Readonly<Partial<Grid1Props>>) {
   const color = stegaClean(colorVariant);
+
   return (
     <SectionContainer color={color} padding={padding}>
-      {columns && columns?.length > 0 && (
-        <div
-          key={`grid-row-${columns.map((col) => col._key).join("-")}`}
+      {columns?.length ? (        <div
           className={cn(
-            // Use bento-style grid with flexible row heights
-            "mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 auto-rows-[minmax(2rem,auto)] md:auto-rows-[minmax(2rem,auto)] md:grid-cols-3"
+            "mx-auto grid w-full max-w-7xl",
+            "grid-cols-1 md:grid-cols-4 gap-4",
+            "md:grid-flow-dense auto-rows-[minmax(200px,auto)]"
           )}
         >
-          {columns.map((block: Sanity.Block) => {
+          {columns.map((block) => {
             const Component = componentMap[block._type];
             if (!Component) {
-              // Fallback for unknown block types to debug
-              return <div data-type={block._type} key={block._key} />;
-            }
-            // Pass bentoVariant to grid-card-2 if present
-            if (isGridCard2(block)) {
-              return (
-                <Component
-                  {...block}
-                  color={color}
-                  bentoVariant={block.bentoVariant}
-                  key={block._key}
-                />
-              );
-            }
-            return <Component {...block} color={color} key={block._key} />;
+              return <div key={block._key} data-type={block._type} />;
+            }            const colSpan = validateSpan(block.bentoColSpan);
+            const rowSpan = validateSpan(block.bentoRowSpan);
+            
+            // Use proper tailwind classes based on span values
+            const colSpanClass = 
+              colSpan === 1 ? "md:col-span-1" :
+              colSpan === 2 ? "md:col-span-2" :
+              colSpan === 3 ? "md:col-span-3" :
+              "md:col-span-4";
+              
+            const rowSpanClass = 
+              rowSpan === 1 ? "md:row-span-1" :
+              rowSpan === 2 ? "md:row-span-2" :
+              rowSpan === 3 ? "md:row-span-3" :
+              "md:row-span-4";
+              
+            return (
+              <div
+                key={block._key}
+                className={cn(
+                  "h-full w-full", // Make sure it fills the entire grid cell
+                  colSpanClass,
+                  rowSpanClass
+                )}
+              >
+                <Component {...block} color={color} bentoColSpan={colSpan} bentoRowSpan={rowSpan} />
+              </div>
+            );
           })}
         </div>
-      )}
+      ) : null}
     </SectionContainer>
   );
 }

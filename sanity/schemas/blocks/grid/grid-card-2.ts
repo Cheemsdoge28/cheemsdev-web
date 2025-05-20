@@ -1,12 +1,11 @@
 import { defineField, defineType } from "sanity";
 import { LayoutGrid } from "lucide-react";
-import { bentoVariant } from "../shared/bento-variant";
 
 export default defineType({
   name: "grid-card-2",
   type: "object",
   icon: LayoutGrid,
-  title: "Image Card",
+  title: "Bento Card",
   fields: [
     defineField({
       name: "title",
@@ -22,13 +21,13 @@ export default defineType({
     defineField({
       name: "image",
       type: "image",
-      description: "Image with alt text format 'Category: Title' for automatic extraction",
+      description: "Image with alt text format",
       fields: [
         {
           name: "alt",
           type: "string",
           title: "Alternative Text",
-          description: "Format as 'Category: Title' for automatic extraction",
+          description: "Image description for screen readers and SEO.",
         },
       ],
     }),
@@ -69,11 +68,22 @@ export default defineType({
       description: "Choose 'small' for tech stack style (small image left, text right)",
     }),
     defineField({
-      name: "bentoVariant",
-      type: "bento-variant",
-      title: "Bento Variant",
-      description: "Choose how many columns this card should span in a bento grid.",
-      initialValue: "none",
+      name: "bentoColSpan",
+      type: "number",
+      title: "Bento Column Span",
+      description: "How many columns should this card span? (1-4)",
+      options: { list: [1, 2, 3, 4] },
+      initialValue: 1,
+      validation: (Rule) => Rule.min(1).max(4),
+    }),
+    defineField({
+      name: "bentoRowSpan",
+      type: "number",
+      title: "Bento Row Span",
+      description: "How many rows should this card span? (1-4)",
+      options: { list: [1, 2, 3, 4] },
+      initialValue: 1,
+      validation: (Rule) => Rule.min(1).max(4),
     }),
   ],
   preview: {

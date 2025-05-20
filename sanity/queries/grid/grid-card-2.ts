@@ -7,7 +7,8 @@ export const gridCard2Query = groq`
     excerpt,
     colorVariant,
     sizeVariant,
-    bentoVariant,
+    bentoColSpan,
+    bentoRowSpan,
     image{
       asset->{
         _id,

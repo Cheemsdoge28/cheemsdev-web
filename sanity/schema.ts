@@ -19,7 +19,7 @@ import { buttonVariant } from "./schemas/blocks/shared/button-variant";
 import { sizeVariant } from "./schemas/blocks/shared/size-variant";
 import { heightVariant } from "./schemas/blocks/shared/height-variant";
 import sectionPadding from "./schemas/blocks/shared/section-padding";
-import { bentoVariant } from "./schemas/blocks/shared/bento-variant";
+import { bentoColSpan, bentoRowSpan } from "./schemas/blocks/shared/bento-variant";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
 import hero2 from "./schemas/blocks/hero/hero-2";
@@ -85,7 +85,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     sizeVariant,
     heightVariant,
     sectionPadding,
-    bentoVariant,
+    bentoColSpan,
+    bentoRowSpan,
     // blocks
     hero1,
     hero2,
