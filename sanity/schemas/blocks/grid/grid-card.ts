@@ -38,7 +38,7 @@ export default defineType({
     prepare({ title, media }) {
       return {
         title: "Grid Card",
-        subtitle: title || "No title",
+        subtitle: title ?? "No title",
         media,
       };
     },

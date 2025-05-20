@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
 import { stegaClean } from "next-sanity"
-import { urlFor } from "@/sanity/lib/image"
+import { urlFor } from "@/sanity/lib/image";
 
 interface GridCard2Props {
   readonly color?: "primary" | "secondary" | "card" | "accent" | "destructive" | "background" | "transparent"
