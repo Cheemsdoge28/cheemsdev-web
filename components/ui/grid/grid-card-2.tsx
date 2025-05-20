@@ -329,7 +329,7 @@ export default function GridCard2({
       <div
         className={cn(
           "group p-4 gap-4 relative flex flex-col items-center justify-end rounded-[2rem]   shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
-          "h-80 w-60 md:w-72 md:h-80"
+          "h-full w-full"
         )}
       >
         {/* Image (flex, not absolute) */}
