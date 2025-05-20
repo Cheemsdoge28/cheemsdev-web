@@ -88,8 +88,8 @@ export default function GridCard2({
       {displayTitle && (
         <p className={cn(
           isSmall
-            ? "text-xl font-bold leading-tight text-primary truncate w-full transition-colors duration-300" 
-            : "text-lg font-bold leading-tight text-primary md:text-xl",
+            ? "text-xl font-bold leading-tight text-primary text-center truncate w-full transition-colors duration-300" 
+            : "text-lg font-bold leading-tight text-primary text-center  md:text-xl",
           isClickable && isSmall && "group-hover:text-accent-foreground"
         )}>
           {displayTitle}
@@ -97,7 +97,7 @@ export default function GridCard2({
       )}
       {excerpt && (
         <p className={cn(
-          isSmall ? "text-xs w-full truncate" : "text-sm",
+          isSmall ? "text-xs text-center w-full truncate" : "text-sm text-center",
           "text-muted-foreground"
         )}>
           {excerpt}
@@ -113,7 +113,7 @@ export default function GridCard2({
           href={link.href}
           target={link.target ? "_blank" : "_self"}
           className={cn(
-            "group relative flex flex-row items-center overflow-hidden rounded-[2rem] bg-card shadow-md border border-border/90 px-4 pl-0 transition-all duration-300",
+            "group relative flex flex-row items-center overflow-hidden rounded-[2rem]   shadow-md border border-border/90 px-4 pl-0 transition-all duration-300",
             !isBento && "max-w-xs",
             "hover:shadow-xl hover:scale-[1.04] hover:border-accent/60 hover:bg-gradient-to-r hover:from-accent/10 hover:to-background/80 active:scale-100",
             "h-full w-full", // Ensure it fills the entire grid cell
@@ -162,7 +162,7 @@ export default function GridCard2({
       return (
         <div
           className={cn(
-            "group relative flex h-16 flex-row items-center overflow-hidden rounded-[2rem] bg-card shadow-md border border-border/90 px-4 pl-0 transition-all duration-300",
+            "group relative flex h-16 flex-row items-center overflow-hidden rounded-[2rem]   shadow-md border border-border/90 px-4 pl-0 transition-all duration-300",
             !isBento && "max-w-xs",            
             "hover:shadow-lg hover:bg-muted/40",
             "gap-4",
@@ -215,7 +215,7 @@ export default function GridCard2({
           href={link.href}
           target={link.target ? "_blank" : "_self"}
           className={cn(
-            "group relative flex flex-col items-center overflow-hidden rounded-[2rem] bg-card shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
+            "group relative flex flex-col gap-4 items-center justify-center overflow-hidden rounded-[2rem]   shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
             "h-full w-full",
             "aspect-square",
             color === "primary" && "bg-primary text-primary-foreground",
@@ -227,8 +227,8 @@ export default function GridCard2({
             isClickable && "hover:scale-[1.02] hover:border-accent/40",
           )}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-background/20" />
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-background/20 z-0" />
+          <div className="absolute inset-0 overflow-hidden z-0">
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={image.alt ?? ""}
@@ -240,11 +240,8 @@ export default function GridCard2({
               sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw"
             />
           </div>          
-          <div className="relative z-10 flex h-full w-full flex-col justify-end p-4 gap-2">
-            <div className="transform transition-transform duration-300 group-hover:translate-y-[-4px] w-full text-center flex flex-col items-center gap-1">
-              {displayTitle && <p className="text-lg font-bold leading-tight md:text-xl">{displayTitle}</p>}
-              {excerpt && <p className="text-muted-foreground text-sm">{excerpt}</p>}
-            </div>
+          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4 gap-2">
+            {ContentBlock()}
           </div>
         </Link>
       )
@@ -252,7 +249,7 @@ export default function GridCard2({
       return (
         <div
           className={cn(
-            "group relative flex flex-col items-center overflow-hidden rounded-[2rem] bg-card shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
+            "group relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem]   shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
             "h-full w-full",
             "aspect-square",
             color === "primary" && "bg-primary text-primary-foreground",
@@ -264,8 +261,8 @@ export default function GridCard2({
             isClickable && "hover:scale-[1.02] hover:border-accent/40",
           )}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-background/20" />
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-background/20 z-0" />
+          <div className="absolute inset-0 overflow-hidden z-0">
             <Image
               src={imageUrl || "/placeholder.svg"}
               alt={image.alt ?? ""}
@@ -277,11 +274,8 @@ export default function GridCard2({
               sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw"
             />
           </div>          
-          <div className="relative z-10 flex h-full w-full flex-col justify-end p-4 gap-2">
-            <div className="transform transition-transform duration-300 group-hover:translate-y-[-4px] w-full text-center flex flex-col items-center gap-1">
-              {displayTitle && <p className="text-lg font-bold leading-tight md:text-xl">{displayTitle}</p>}
-              {excerpt && <p className="text-muted-foreground text-sm">{excerpt}</p>}
-            </div>
+          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4 gap-2">
+            {ContentBlock()}
           </div>
         </div>
       )
@@ -339,6 +333,41 @@ export default function GridCard2({
       </>
     )
   }
+  // 1x1 default (not small, not bento)
+  if (!isSmall && !isBento && safeColSpan === 1 && safeRowSpan === 1) {
+    return (
+      <div
+        className={cn(
+          "group p-4 gap-4 relative flex flex-col items-center justify-end rounded-[2rem]   shadow-md transition-all hover:shadow-lg border border-border/90 hover:border-border",
+          "h-80 w-60 md:w-72 md:h-80"
+        )}
+      >
+        {/* Image (flex, not absolute) */}
+        {imageUrl && (
+          <div className="flex-shrink-0 overflow-visible w-full h-2/3 relative">
+            <Image
+              src={imageUrl || "/placeholder.svg"}
+              alt={image.alt ?? ""}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[2rem]"
+              placeholder={blurDataURL ? "blur" : undefined}
+              blurDataURL={blurDataURL ?? ""}
+              quality={90}
+              sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw"
+              style={{ zIndex: 0 }}
+            />
+          </div>
+        )}
+        {/* Content (flex, not absolute) */}
+        <div className="flex flex-col items-center justify-end w-full h-1/3 gap-1 z-10 bg-gradient-to-t from-background/80 to-background/10">
+          <div className="w-full text-center flex flex-col items-center gap-1">
+            {displayTitle && <p className="text-lg font-bold leading-tight text-primary md:text-xl">{displayTitle}</p>}
+            {excerpt && <p className="text-muted-foreground text-sm">{excerpt}</p>}
+          </div>
+        </div>
+      </div>
+    )
+  }
   // Default  
   return isClickable && link?.href ? (
     <Link
@@ -347,8 +376,8 @@ export default function GridCard2({
       className={cn(
         "group relative overflow-hidden rounded-[2rem] border border-border shadow-md transition-all duration-300",
         "h-full w-full",
-        "flex flex-col p-4 gap-4",
-        !isBento && "aspect-[3/4]", // Use aspect ratio instead of fixed height
+        "flex flex-col items-center justify-center p-4 gap-2",
+        !isBento && "aspect-[3/4]",
         color === "primary" && "bg-primary text-primary-foreground",
         color === "secondary" && "bg-secondary text-secondary-foreground",
         color === "accent" && "bg-accent text-accent-foreground",
@@ -360,16 +389,19 @@ export default function GridCard2({
           : "hover:shadow-lg hover:bg-muted/40",
       )}
     >
-      {ImageBlock()}
-      {ContentBlock()}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/30 z-0" />
+      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+        {ImageBlock()}
+        {ContentBlock()}
+      </div>
     </Link>
   ) : (    
     <div
       className={cn(
         "group relative overflow-hidden rounded-[2rem] border border-border shadow-md transition-all duration-300",
         "h-full w-full",
-        "flex flex-col p-4 gap-4",
-        !isBento && "aspect-[3/4]", // Use aspect ratio instead of fixed height
+        "flex flex-col items-center justify-center p-4 gap-2",
+        !isBento && "aspect-[3/4]",
         color === "primary" && "bg-primary text-primary-foreground",
         color === "secondary" && "bg-secondary text-secondary-foreground",
         color === "accent" && "bg-accent text-accent-foreground",
@@ -381,8 +413,11 @@ export default function GridCard2({
           : "hover:shadow-lg hover:bg-muted/40",
       )}
     >
-      {ImageBlock()}
-      {ContentBlock()}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/30 z-0" />
+      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+        {ImageBlock()}
+        {ContentBlock()}
+      </div>
     </div>
   )
 }
