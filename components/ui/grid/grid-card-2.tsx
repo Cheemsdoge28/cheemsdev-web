@@ -1,5 +1,4 @@
 "use client"
-
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
@@ -55,8 +54,8 @@ export default function GridCard2({
         "relative overflow-hidden flex-shrink-0 rounded-[1.5rem]",
         isSmall && "h-16 w-16 rounded-[2rem]",
         isRect && safeColSpan > safeRowSpan && "w-full",
-        isRect && safeRowSpan > safeColSpan && "w-full aspect-[3/2]",
-        !isRect && !isSmall && "w-full aspect-[4/3]",
+        isRect && safeRowSpan > safeColSpan && "w-full aspect-[4/3]",
+        !isRect && !isSmall && "w-full h-full",
         "h-full" // Ensure image block fills parent height
       )}>
         <Image
@@ -253,7 +252,7 @@ export default function GridCard2({
               "h-full w-full",
               "flex flex-col p-4 gap-4",
               safeColSpan > safeRowSpan ? "flex-row" : "flex-col",
-              safeColSpan !== safeRowSpan && "aspect-[4/3]", // Use aspect ratio instead of fixed dimensions
+              safeColSpan !== safeRowSpan && "h-full", // Use aspect ratio instead of fixed dimensions
               color === "primary" && "bg-primary text-primary-foreground",
               color === "secondary" && "bg-secondary text-secondary-foreground",
               color === "accent" && "bg-accent text-accent-foreground",
@@ -265,8 +264,8 @@ export default function GridCard2({
                 : "hover:shadow-lg hover:border-border",
             )}
           >
-            <div className="flex-1 h-full">{ImageBlock()}</div>
-            <div className="flex-1 h-full">{ContentBlock()}</div>
+            <div className="flex-shrink-0 overflow-visible w-full h-2/3 relative">{ImageBlock()}</div>
+            <div className="flex flex-col items-center justify-end w-full h-1/3 gap-1 z-10 bg-gradient-to-t from-background/80 to-background/10">{ContentBlock()}</div>
           </div>
       )
     }
@@ -282,7 +281,7 @@ export default function GridCard2({
               "h-full w-full",
               "flex p-4 gap-4",
               safeColSpan > safeRowSpan ? "flex-row" : "flex-col",
-              safeColSpan !== safeRowSpan && "aspect-[4/3]", // Use aspect ratio instead of fixed dimensions
+              safeColSpan !== safeRowSpan && "h-full", // Use aspect ratio instead of fixed dimensions
               color === "primary" && "bg-primary text-primary-foreground",
               color === "secondary" && "bg-secondary text-secondary-foreground",
               color === "accent" && "bg-accent text-accent-foreground",
@@ -294,8 +293,8 @@ export default function GridCard2({
                 : "hover:shadow-lg hover:border-bg",
             )}
           >
-            <div className="flex-1 h-full">{ImageBlock()}</div>
-            <div className="flex-1 h-full">{ContentBlock()}</div>
+            <div className={cn(safeColSpan<safeRowSpan? "flex-shrink-0 overflow-visible w-full h-2/3 relative" : "flex-1 h-full")}>{ImageBlock()}</div>
+            <div className={cn(safeColSpan<safeRowSpan? "flex flex-col items-center justify-end w-full h-1/3 gap-1 z-10 bg-gradient-to-t from-background/80 to-background/10" : "flex-1 h-full")}>{ContentBlock()}</div>
           </Link>
         ) : (
           <div            
@@ -304,7 +303,7 @@ export default function GridCard2({
               "h-full w-full",
               "flex p-4 gap-4",
               safeColSpan > safeRowSpan ? "flex-row" : "flex-col",
-              safeColSpan !== safeRowSpan && "aspect-[4/3]", // Use aspect ratio instead of fixed dimensions
+              safeColSpan !== safeRowSpan && "h-full", // Use aspect ratio instead of fixed dimensions
               color === "primary" && "bg-primary text-primary-foreground",
               color === "secondary" && "bg-secondary text-secondary-foreground",
               color === "accent" && "bg-accent text-accent-foreground",
@@ -316,8 +315,9 @@ export default function GridCard2({
                 : "hover:shadow-lg hover:border-border",
             )}
           >
-            <div className="flex-1 h-full">{ImageBlock()}</div>
-            <div className="flex-1 h-full">{ContentBlock()}</div>
+            
+            <div className={cn(safeColSpan<safeRowSpan? "flex-shrink-0 overflow-visible w-full h-2/3 relative" : "flex-1 h-full")}>{ImageBlock()}</div>
+            <div className={cn(safeColSpan<safeRowSpan? "flex flex-col items-center justify-end w-full h-1/3 gap-1 z-10 bg-gradient-to-t from-background/80 to-background/10" : "flex-1 h-full")}>{ContentBlock()}</div>
           </div>
         )}
       </>
@@ -367,7 +367,7 @@ export default function GridCard2({
         "group relative overflow-hidden rounded-[2rem] border border-border shadow-md transition-all duration-300",
         "h-full w-full",
         "flex flex-col items-center justify-center p-4 gap-2",
-        !isBento && "aspect-[3/4]",
+        !isBento && "h-full",
         color === "primary" && "bg-primary text-primary-foreground",
         color === "secondary" && "bg-secondary text-secondary-foreground",
         color === "accent" && "bg-accent text-accent-foreground",
@@ -391,7 +391,7 @@ export default function GridCard2({
         "group relative overflow-hidden rounded-[2rem] border border-border shadow-md transition-all duration-300",
         "h-full w-full",
         "flex flex-col items-center justify-center p-4 gap-2",
-        !isBento && "aspect-[3/4]",
+        !isBento && "h-full",
         color === "primary" && "bg-primary text-primary-foreground",
         color === "secondary" && "bg-secondary text-secondary-foreground",
         color === "accent" && "bg-accent text-accent-foreground",
