@@ -62,10 +62,10 @@ export default function GridRow({
             "md:grid-flow-dense auto-rows-[minmax(200px,auto)]"
           )}
         >
-          {columns.map((block) => {
+          {columns.map((block, index) => {
             const Component = componentMap[block._type];
             if (!Component) {
-              return <div key={block._key} data-type={block._type} />;
+              return <div key={block._key || `${block._type}-${index}`} data-type={block._type} />;
             }            const colSpan = validateSpan(block.bentoColSpan);
             const rowSpan = validateSpan(block.bentoRowSpan);
             
@@ -84,7 +84,7 @@ export default function GridRow({
               
             return (
               <div
-                key={block._key}
+                key={block._key || `${block._type}-${index}`}
                 className={cn(
                   "h-full w-full", // Make sure it fills the entire grid cell
                   colSpanClass,

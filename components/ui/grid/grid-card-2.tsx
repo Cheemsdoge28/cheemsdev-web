@@ -1,4 +1,3 @@
-"use client"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
@@ -51,9 +50,9 @@ export default function GridCard2({
   const ImageBlock = () =>
     imageUrl && (
       <div className={cn(
-        "relative overflow-hidden flex-shrink-0 rounded-[1.5rem]",
+        "relative overflow-hidden flex-shrink-0 rounded-[2rem]",
         isSmall && "h-16 w-16 rounded-[2rem]",
-        isRect && safeColSpan > safeRowSpan && "w-full",
+        isRect && safeColSpan > safeRowSpan && "w-full aspect-[4/3]",
         isRect && safeRowSpan > safeColSpan && "w-full aspect-[4/3]",
         !isRect && !isSmall && "w-full h-full",
         "h-full" // Ensure image block fills parent height
