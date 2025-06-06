@@ -72,8 +72,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     author,
     category,
     faq,
-    testimonial,
-    settingsType,
+    testimonial,    settingsType,
     announcement,
     // shared objects
     blockContent,

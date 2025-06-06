@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  label      String
+  keyHash    String    @unique // SHA-256 hash of the API key
+  salt       String    // Salt used for hashing
+  lookupHash String    @unique // Fast lookup hash (first 16 chars of API key)
+  createdAt  DateTime  @default(now())
+  lastUsed   DateTime?
+  isActive   Boolean   @default(true)
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId], name: "idx_api_keys_user_id")
+  @@index([lookupHash], name: "idx_api_keys_lookup_hash")
+  @@unique([userId, lookupHash], name: "unique_user_lookup_hash")
+  @@map("api_keys")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  clerkId String   @unique
+  email   String   @unique
+  name    String?
+  apiKeys ApiKey[]
+}

@@ -1,12 +1,9 @@
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import {
   Files,
-  BookA,
   User,
   ListCollapse,
   Quote,
-  BookmarkCheck,
-  Mail,
   PartyPopper,
   Text,
 } from "lucide-react";
@@ -66,11 +63,8 @@ export const structure = (S: any, context: any) =>
       S.divider(),
       orderableDocumentListDeskItem({
         type: "testimonial",
-        title: "Testimonials",
-        icon: Quote,
+        title: "Testimonials",        icon: Quote,
         S,
         context,
       }),
-      S.divider(),
-
     ]);

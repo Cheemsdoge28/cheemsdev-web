@@ -3,16 +3,20 @@
   "version": "0.8.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.20.2",
     "@hookform/resolvers": "^3.10.0",
     "@next/third-parties": "^15.1.5",
     "@portabletext/react": "^3.2.0",
+    "@prisma/client": "^6.8.2",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.11",
@@ -45,6 +49,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "crypto": "^1.0.1",
     "embla-carousel-react": "^8.5.2",
     "lodash.get": "^4.4.2",
     "lucide-react": "^0.473.0",
@@ -55,6 +60,7 @@
     "nodemailer": "^6.10.1",
     "npm": "^11.4.1",
     "pluralize-esm": "^9.0.5",
+    "prisma": "^6.8.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.54.2",
@@ -67,6 +73,7 @@
     "sanity-plugin-media": "^3.0.2",
     "sonner": "^1.7.2",
     "styled-components": "^6.1.14",
+    "svix": "^1.66.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"

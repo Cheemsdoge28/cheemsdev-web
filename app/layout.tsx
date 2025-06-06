@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { clerkTheme } from "@/lib/clerk-theme";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -43,20 +45,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <link rel="icon" href="/favicon.ico" />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased overscroll-none",
-          fontSans.variable
-        )}
-      >
-        {children}
-        <Toaster position="top-center" richColors />
-        <Analytics />
-        <SanityLive />
-        <SpeedInsights />
-      </body>
-    </html>
+    <ClerkProvider appearance={clerkTheme}>
+      <html lang="en" suppressHydrationWarning>
+        <link rel="icon" href="/favicon.ico" />
+        <body
+          className={cn(
+            "min-h-screen bg-background dark font-sans antialiased overscroll-none",
+            fontSans.variable
+          )}
+        >
+          {children}
+          <Toaster position="top-center" richColors />
+          <Analytics />
+          <SanityLive />
+          <SpeedInsights />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

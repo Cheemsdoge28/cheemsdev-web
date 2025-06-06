@@ -36,3 +36,5 @@ export const extractPlainText = (blocks: BlockContent): string | null => {
     })
     .join(" ");
 };
+
+export const SANITY_API_WRITE_TOKEN = process.env.SANITY_API_WRITE_TOKEN

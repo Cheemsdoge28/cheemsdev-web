@@ -26,11 +26,10 @@ export default defineConfig({
   dataset,
   name: HEADER_NAME,
   // Add and edit the content schema in the './sanity/schema' folder
-  schema,
-  plugins: [
+  schema,  plugins: [
     assist(),
     imageHotspotArrayPlugin(),
-    structureTool({ structure }), 
+    structureTool({ structure }),
     customDocumentActions(),
     colorInput(),
     presentationTool({

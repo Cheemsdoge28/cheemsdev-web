@@ -12,6 +12,13 @@ import { usePathname } from "next/navigation";
 import type { NavItem } from "@/types";
 import { useState } from "react";
 import { TextAlignRightIcon } from "@radix-ui/react-icons";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 import {
   Accordion,
@@ -20,7 +27,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
+export default function MobileNav({ navItems }: { readonly navItems: NavItem[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -94,8 +101,9 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
                     </Link>
                   </li>
                 );
-              })}
-            </ul>
+              })}            </ul>
+            
+            
             <div className="flex justify-end pt-6">
               <Button
                 asChild
@@ -108,6 +116,40 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
                   Contact Us
                 </Link>
               </Button>
+            </div>
+            {/* Authentication section - only show for screens below 440px */}
+            <div className="[@media(min-width:440px)]:hidden pt-6">              <SignedOut>
+                <div className="flex flex-row justify-end items-end space-x-3">
+                  <SignInButton mode="redirect" fallbackRedirectUrl="/" forceRedirectUrl="/">
+                    <button 
+                      className="px-4 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors border border-border rounded-[2rem]"
+                      onClick={() => setOpen(false)}
+                    >
+                      Sign In
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="redirect" fallbackRedirectUrl="/" forceRedirectUrl="/">
+                    <button 
+                      className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                      onClick={() => setOpen(false)}
+                    >
+                      Sign Up
+                    </button>
+                  </SignUpButton>
+                </div>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex items-center justify-end">                  <UserButton 
+                    appearance={{
+                      elements: {
+                        avatarBox: "h-8 w-8 border border-border",
+                        userButtonPopoverCard: "bg-popover border border-border rounded-2xl shadow-lg",
+                        userButtonPopoverActionButton: "text-foreground hover:bg-accent font-sans",
+                      },
+                    }}
+                  />
+                </div>
+              </SignedIn>
             </div>
           </div>
         </div>
