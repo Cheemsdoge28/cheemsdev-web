@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomBytes, createHash } from 'crypto';
+import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
 
 const ENCRYPTION_SECRET = process.env.ENCRYPTION_SECRET ?? '';
@@ -10,13 +11,38 @@ function hashApiKey(key: string, salt: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // Check authentication
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { label } = await req.json();
     if (!label || typeof label !== 'string') {
       return NextResponse.json({ error: 'Missing label' }, { status: 400 });
-    }    const key = randomBytes(32).toString('hex');
+    }
+
+    // Generate API key components
+    const key = randomBytes(32).toString('hex');
     const salt = randomBytes(16).toString('hex');
     const keyHash = hashApiKey(key, salt);
     const lookupHash = key.substring(0, 16); // First 16 chars for fast lookup
+
+    // Find or create user in database
+    let user = await prisma.user.findUnique({
+      where: { clerkId: userId }
+    });
+
+    if (!user) {
+      // Create user if doesn't exist (fallback)
+      user = await prisma.user.create({
+        data: {
+          clerkId: userId,
+          email: '', // Will be updated by webhook
+          name: '', // Will be updated by webhook
+        }
+      });
+    }
 
     // Create the API key in the database
     const apiKey = await prisma.apiKey.create({
@@ -25,6 +51,7 @@ export async function POST(req: NextRequest) {
         keyHash,
         salt,
         lookupHash,
+        userId: user.id,
       },
     });
 
